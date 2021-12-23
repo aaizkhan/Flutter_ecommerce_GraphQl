@@ -23,6 +23,19 @@ query product{
         productType{
           name
         }
+         pricing{
+          onSale
+          priceRange{
+            start{
+              currency
+              net {
+                currency
+                amount
+              }
+              
+            }
+          }
+        }
          
       }
     }
@@ -131,7 +144,6 @@ class _HomeState extends State<Home> {
                       }
                     }
                     if (queryResult.hasException) {
-                      print(queryResult.exception.toString());
                       return Center(
                         child: Text('${queryResult.exception.toString()}'),
                       );
@@ -155,6 +167,8 @@ class _HomeState extends State<Home> {
                           itemCount: itemsList.length,
                           itemBuilder: (context, index) {
                             var items = itemsList[index]['node'];
+                            var itemPrice = items['pricing']['priceRange']
+                                ['start']['net']['amount'];
                             return Material(
                               elevation: 5,
                               borderRadius: BorderRadius.circular(10),
@@ -182,11 +196,22 @@ class _HomeState extends State<Home> {
                                         '${items['name']}',
                                         maxLines: 2,
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w700),
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800),
                                       ),
                                     ),
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '\$$itemPrice',
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                            color: Colors.blue,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
@@ -194,7 +219,7 @@ class _HomeState extends State<Home> {
                           },
                           staggeredTileBuilder: (index) {
                             return new StaggeredTile.count(
-                                1, index.isEven ? 1.2 : 1.8);
+                                1, index.isEven ? 1.38 : 1.7);
                           }),
                     );
                   }),

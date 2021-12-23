@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
-  const ProductDetails({Key? key}) : super(key: key);
+  final productName;
+  final productThumbnail;
+  final productCateogry;
+  final productDecription;
+  const ProductDetails(
+      {Key? key,
+      this.productName,
+      this.productThumbnail,
+      this.productCateogry,
+      this.productDecription})
+      : super(key: key);
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();

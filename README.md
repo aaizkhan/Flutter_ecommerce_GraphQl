@@ -13,7 +13,7 @@ Flutter Ecommerce App using GraphQl API
 
 ### App Demo
 
-![til](./newApp.gif)
+![til](./graphql.gif)
 
 ### GraphQl Open-Source API
     Ecommerce site:  https://saleor.io/  

@@ -1,3 +1,4 @@
+import 'package:ecommerce_graphql/Screeens/productDetailScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -84,8 +85,7 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, index) {
                   return Container(
                     decoration: BoxDecoration(
-                        color:
-                            index == selected ? Colors.blueGrey : Colors.white,
+                        color: index == selected ? Colors.amber : Colors.white,
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.grey,
@@ -169,50 +169,67 @@ class _HomeState extends State<Home> {
                             var items = itemsList[index]['node'];
                             var itemPrice = items['pricing']['priceRange']
                                 ['start']['net']['amount'];
-                            return Material(
-                              elevation: 5,
-                              borderRadius: BorderRadius.circular(10),
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12))),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(12)),
-                                        child: Image.network(
-                                          items['thumbnail']['url'],
-                                          fit: BoxFit.fitHeight,
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProductDetails(
+                                              productName: items['name'],
+                                              productThumbnail:
+                                                  items['thumbnail']['url'],
+                                              productCateogry:
+                                                  items['productType']['name'],
+                                              produectPrice: itemPrice,
+                                              productDecription:
+                                                  items['description'],
+                                            )));
+                              },
+                              child: Material(
+                                elevation: 5,
+                                borderRadius: BorderRadius.circular(10),
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12))),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(12)),
+                                          child: Image.network(
+                                            items['thumbnail']['url'],
+                                            fit: BoxFit.fitHeight,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        '${items['name']}',
-                                        maxLines: 2,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800),
+                                      Container(
+                                        child: Text(
+                                          '${items['name']}',
+                                          maxLines: 2,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w800),
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        '\$$itemPrice',
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                            color: Colors.blue,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                    )
-                                  ],
+                                      Container(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '\$$itemPrice',
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w900),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
